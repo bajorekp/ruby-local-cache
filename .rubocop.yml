@@ -3,3 +3,18 @@ AllCops:
 
 require:
   - rubocop-rspec
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/**/*
+
+RSpec/VerifiedDoubles:
+  Exclude:
+    - spec/**/*
+
+RSpec/ExampleLength:
+  Max: 20
