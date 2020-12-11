@@ -45,6 +45,11 @@ class LocalCache
     @store.key?(key) && @store[key][:expires_at] > Time.now.to_i
   end
 
+  def clear(key)
+    @store.delete(key)
+    nil
+  end
+
   private
 
   attr_reader :logger

@@ -40,6 +40,19 @@ RSpec.describe LocalCache do
     end
   end
 
+  describe '.clear' do
+    it 'returns nil' do
+      expect(cache.clear('foo')).to eq(nil)
+    end
+
+    it 'invalidates cache entry' do
+      cached_value = double('cached_value')
+      expect(cache.write('foo', cached_value)).to eq(cached_value)
+      expect(cache.clear('foo')).to eq(nil)
+      expect(cache).not_to be_valid('foo')
+    end
+  end
+
   describe '.read' do
     it 'returns nil for unknown entry' do
       expect(cache.read('foo')).to eq(nil)
