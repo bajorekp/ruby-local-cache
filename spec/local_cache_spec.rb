@@ -78,46 +78,46 @@ RSpec.describe LocalCache do
 
       allow(Time).to receive(:now).and_return(Time.now + 11)
 
-      first_block_result = double('first_block_result')
-      expect(cache.fetch('foo') { first_block_result }).to eq(first_block_result)
+      first_execution_result = double('first_execution_result')
+      expect(cache.fetch('foo') { first_execution_result }).to eq(first_execution_result)
     end
 
     it 'saves new entry' do
-      first_block_result = double('first_block_result')
-      expect(cache.fetch('foo') { first_block_result }).to eq(first_block_result)
+      first_execution_result = double('first_execution_result')
+      expect(cache.fetch('foo') { first_execution_result }).to eq(first_execution_result)
 
-      expect(cache.read('foo')).to eq(first_block_result)
-      expect(cache.fetch('foo') { first_block_result }).to eq(first_block_result)
+      expect(cache.read('foo')).to eq(first_execution_result)
+      expect(cache.fetch('foo') { first_execution_result }).to eq(first_execution_result)
     end
 
     it "don't overwrite a cached entry" do
-      first_block_result = double('first_block_result')
-      expect(cache.fetch('foo') { block_result }).to eq(first_block_result)
-      expect(cache.read('foo')).to eq(first_block_result)
+      first_execution_result = double('first_execution_result')
+      expect(cache.fetch('foo') { first_execution_result }).to eq(first_execution_result)
+      expect(cache.read('foo')).to eq(first_execution_result)
 
-      future_block_result = double('future_block_result')
-      expect(cache.fetch('foo') { future_block_result }).to eq(first_block_result)
-      expect(cache.read('foo')).to eq(first_block_result)
+      next_execution_result = double('next_execution_result')
+      expect(cache.fetch('foo') { next_execution_result }).to eq(first_execution_result)
+      expect(cache.read('foo')).to eq(first_execution_result)
     end
 
     it "don't cache nil result" do
-      first_block_result = nil
-      expect(cache.fetch('foo') { first_block_result }).to eq(first_block_result)
+      first_execution_result = nil
+      expect(cache.fetch('foo') { first_execution_result }).to eq(first_execution_result)
 
-      future_block_result = double('future_block_result')
-      expect(cache.fetch('foo') { future_block_result }).to eq(future_block_result)
-      expect(cache.read('foo')).to eq(future_block_result)
+      next_execution_result = double('next_execution_result')
+      expect(cache.fetch('foo') { next_execution_result }).to eq(next_execution_result)
+      expect(cache.read('foo')).to eq(next_execution_result)
     end
 
     context 'with save_nil: true' do
       it 'caches nil result' do
-        first_block_result = nil
-        expect(cache.fetch('foo', save_nil: true) { first_block_result }).to eq(first_block_result)
+        first_execution_result = nil
+        expect(cache.fetch('foo', save_nil: true) { first_execution_result }).to eq(first_execution_result)
         expect(cache.read('foo')).to eq(nil)
 
-        future_block_result = double('future_block_result')
-        expect(cache.fetch('foo', save_nil: true) { future_block_result }).to eq(first_block_result)
-        expect(cache.read('foo')).to eq(first_block_result)
+        next_execution_result = double('next_execution_result')
+        expect(cache.fetch('foo', save_nil: true) { next_execution_result }).to eq(first_execution_result)
+        expect(cache.read('foo')).to eq(first_execution_result)
       end
     end
   end
